@@ -1,67 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualization</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h1>Data Visualization</h1>
-    <canvas id="chart"></canvas>
-
-    <script>
-        // Fetch the datasets passed from the Flask backend
-        const datasets = {{ datasets|tojson }};
-
-        // Get the canvas context
-        const ctx = document.getElementById('chart').getContext('2d');
-
-        // Prepare the chart data
-        const chartData = {
-            labels: datasets[0]?.shifts || [], // Use the first dataset's shifts for x-axis labels
-            datasets: datasets.map(data => ({
-                label: data.label, // Label for each dataset
-                data: data.intensities, // Y-axis data
-                borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`, // Random color
-                tension: 0.1, // Smooth lines
-                fill: false // No filling under the line
+{% extends 'base.html' %}
+{% block content %}
+<div id="chart-container" class="text-center">
+    <h1 class="text-2xl font-bold mb-4">Chart for {{ datasets[0].label }}</h1>
+<canvas id="chart" class="w-full"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const data = {{ datasets|tojson }};
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data[0].shifts,
+            datasets: data.map(d => ({
+                label: d.label,
+                data: d.intensities,
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)'
             }))
-        };
-
-        // Configure the chart
-        const config = {
-            type: 'line',
-            data: chartData,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Raman Shifts'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Intensity'
-                        }
-                    }
-                }
-            }
-        };
-
-        // Initialize the chart
-        new Chart(ctx, config);
-    </script>
-
-    <!-- Link back to file management page -->
-    <p><a href="{{ url_for('file_management.view_files') }}">Back to My Files</a></p>
-</body>
-</html>
+        }
+    });
+</script>
+    <p class="text-muted">Placeholder for chart visualization</p>
+</div>
+<a href="{{ url_for('index') }}" class="btn btn-secondary mt-4">Back to Home</a>
+{% endblock %}

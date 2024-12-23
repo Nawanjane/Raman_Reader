@@ -1,19 +1,25 @@
-<h2>Welcome, {{ current_user.username }}</h2>
-<form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.file.label }} {{ form.file() }}
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center">Welcome, {{ current_user.username }}</h1>
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('index') }}">
+    <div class="mb-3">
+        <label for="file" class="form-label">Upload .asc Files</label>
+        <input type="file" class="form-control" id="file" name="file" multiple required>
     </div>
-    <div>
-        {{ form.submit() }}
-    </div>
+    <button type="submit" class="btn btn-success w-100">Upload</button>
 </form>
 
-<ul>
-    {% for file in files %}
-    <li>
-        <a href="{{ url_for('chart', file_id=file.id) }}">{{ file.filename }}</a>
-    </li>
-    {% endfor %}
-</ul>
-
+<h2 class="mt-5">Your Uploaded Files</h2>
+{% if files %}
+    <ul class="list-group">
+        {% for file in files %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ file.filename }}
+                <a href="{{ url_for('chart', file_id=file.id) }}" class="btn btn-primary btn-sm">View Chart</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="text-muted">No files uploaded yet.</p>
+{% endif %}
+{% endblock %}

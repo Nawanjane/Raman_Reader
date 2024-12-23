@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center">Process Folder</h1>
+<form method="POST" action="{{ url_for('process_folder') }}">
+    <div class="mb-3">
+        <label for="folder_path" class="form-label">Folder Path</label>
+        <input type="text" class="form-control" id="folder_path" name="folder_path" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Process</button>
+</form>
+<a href="{{ url_for('index') }}" class="btn btn-secondary mt-4">Back to Home</a>
+{% endblock %}
