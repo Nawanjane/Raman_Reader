@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Files</title>
+</head>
+<body>
+    <h1>Your Uploaded Files</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Uploaded At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.filename }}</td>
+                <td>{{ file.uploaded_at }}</td>
+                <td>
+                    <a href="{{ url_for('file_management.download_file', file_id=file.id) }}">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
