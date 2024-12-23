@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Raman Shift Chart (Multiple Datasets)</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+
+        <div class="card-body">
+            <div class="card-header">
+                <h5 class="card-title">Raman Shift Chart of Geuda</h5>
+            </div>
+            <!-- Existing canvas element -->
+            <canvas id="ramanChart"></canvas>
+            <div class="mt-3">
+                <input type="text" id="imageName" placeholder="Enter image name" class="form-control">
+                <button class="btn btn-primary mt-2" onclick="downloadChartAsImage()">Download as PNG</button>
+            </div>
+        </div>
+
+        <div class="card">
+            
+            <div class="card-body">
+                <canvas id="ramanChart"></canvas>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Zoom Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <script>
+    const ctx = document.getElementById('ramanChart').getContext('2d');
+    const datasets = {{ datasets|tojson }};
+    let ramanChart;
+
+    function createChart(datasets) {
+        if (ramanChart) {
+            ramanChart.destroy();
+        }
+        const dataSetsForChart = datasets.map((dataset, index) => ({
+            label: dataset.label,
+            data: dataset.intensities,
+            fill: false,
+            borderColor: getBorderColor(index), // Function to get a border color
+            borderWidth: 1,
+            pointRadius: 0, // Remove points for a sharp line
+            tension: 0.1
+        }));
+        ramanChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: datasets[0].shifts, // Assuming all datasets have the same x-axis (shifts)
+                datasets: dataSetsForChart
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x'
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Function to get a distinct border color for each dataset
+    function getBorderColor(index) {
+        const colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(75, 192, 192)', 'rgb(153, 102, 255)'];
+        return colors[index % colors.length];
+    }
+    function downloadChartAsImage() {
+        const imageName = document.getElementById('imageName').value || 'raman_chart';
+        // Get the canvas element and its context
+        const canvas = document.getElementById('ramanChart');
+        const context = canvas.getContext('2d');
+    
+        // Save the current context state (styles, transformations, etc.)
+        context.save();
+    
+        // Set the background to white and fill the canvas with it
+        context.globalCompositeOperation = 'destination-over';
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    
+        // Convert the canvas with the white background to a PNG image
+        const url_base64 = canvas.toDataURL('image/png');
+    
+        // Restore the context to its original state
+        context.restore();
+    
+        // Create a link element and trigger the download
+        const link = document.createElement('a');
+        link.href = url_base64;
+        link.download = imageName + '.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    
+    // Initialize the chart with the datasets
+    createChart(datasets);
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

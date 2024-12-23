@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (head content) -->
+</head>
+<body>
+    <div class="container">
+        <h1>Process Folder</h1>
+        <form action="{{ url_for('process_folder') }}" method="post">
+            <div class="mb-3">
+                <label for="folderPath" class="form-label">Folder Path:</label>
+                <input type="text" class="form-control" id="folderPath" name="folder_path" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Process Folder</button>
+        </form>
+    </div>
+    <!-- ... (rest of the body content) -->
+</body>
+</html>
