@@ -6,8 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'  # For SQLite (use other URIs for other databases)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # To disable modification tracking
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
