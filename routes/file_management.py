@@ -43,3 +43,16 @@ def view_files():
     user_id = session['user_id']
     user_files = File.query.filter_by(user_id=user_id).all()
     return render_template('files.html', files=user_files)
+
+@file_management_blueprint.route('/download/<int:file_id>', methods=['GET'])
+def download_file(file_id):
+    if 'user_id' not in session:
+        flash("Please log in to download files.", "error")
+        return redirect(url_for('auth.login'))
+
+    file = File.query.get(file_id)
+    if not file or file.user_id != session['user_id']:
+        flash("File not found or access denied.", "error")
+        return redirect(url_for('file_management.view_files'))
+
+    return send_from_directory(os.path.dirname(file.filepath), os.path.basename(file.filepath), as_attachment=True)
