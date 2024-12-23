@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Welcome to the File Management System</h1>
-    <nav>
-        <a href="{{ url_for('auth.login') }}">Login</a>
-        <a href="{{ url_for('auth.register') }}">Register</a>
-    </nav>
-</body>
-</html>
+<h2>Welcome, {{ current_user.username }}</h2>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.file.label }} {{ form.file() }}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+
+<ul>
+    {% for file in files %}
+    <li>
+        <a href="{{ url_for('chart', file_id=file.id) }}">{{ file.filename }}</a>
+    </li>
+    {% endfor %}
+</ul>
+

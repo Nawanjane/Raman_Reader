@@ -1,11 +1,4 @@
-Flask
-Flask-SQLAlchemy
-Flask-Login
-Flask-WTF
-Werkzeug
-WTForms
-Jinja2
-gunicorn  # If deploying to a production server
-pandas # For data handling if needed
-numpy # For numerical operations
-matplotlib # Optional, for creating plots if needed
+Flask==2.2.3
+Flask-SQLAlchemy==3.0.0
+Flask-WTF==1.0.0
+Werkzeug==2.2.3
