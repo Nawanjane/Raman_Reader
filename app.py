@@ -7,6 +7,7 @@ from scripts.process_file import read_asc_file
 import os
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'hZdXEt5QyOZIZG4l3fOy2vmIreKoKgk4'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
