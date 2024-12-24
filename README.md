@@ -48,7 +48,30 @@ Ensure you have the following installed:
    pip install -r requirements.txt
    ```
 
-4. **Set Up the Database**:
+4. **Environment Variables**:
+
+Set the following environment variables for secure configuration:
+
+- `FLASK_APP=app.py`
+- `FLASK_ENV=development`
+- `SECRET_KEY`: Your application's secret key.
+
+For Linux/macOS:
+```bash
+export FLASK_APP=app.py
+export FLASK_ENV=development
+export SECRET_KEY="your-secret-key"
+```
+
+For Windows (Command Prompt):
+```bash
+set FLASK_APP=app.py
+set FLASK_ENV=development
+set SECRET_KEY="your-secret-key"
+```
+
+
+5. **Set Up the Database**:
    Initialize the SQLite database.
    ```bash
    flask shell
@@ -57,12 +80,12 @@ Ensure you have the following installed:
    exit()
    ```
 
-5. **Run the Application**:
+6. **Run the Application**:
    ```bash
    flask run
    ```
 
-6. Open your browser and navigate to:
+7. Open your browser and navigate to:
    ```
    http://127.0.0.1:5000
    ```
@@ -92,29 +115,7 @@ flask-asc-processor/
 
 ---
 
-### Environment Variables
 
-Set the following environment variables for secure configuration:
-
-- `FLASK_APP=app.py`
-- `FLASK_ENV=development`
-- `SECRET_KEY`: Your application's secret key.
-
-For Linux/macOS:
-```bash
-export FLASK_APP=app.py
-export FLASK_ENV=development
-export SECRET_KEY="your-secret-key"
-```
-
-For Windows (Command Prompt):
-```bash
-set FLASK_APP=app.py
-set FLASK_ENV=development
-set SECRET_KEY="your-secret-key"
-```
-
----
 
 ### Usage
 
