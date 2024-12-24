@@ -32,8 +32,8 @@ Ensure you have the following installed:
 
 1. **Clone the Repository** (or download as ZIP and extract):
    ```bash
-   git clone https://github.com/yourusername/flask-asc-processor.git
-   cd flask-asc-processor
+   git clone https://github.com/Nawanjane/Raman_Reader.git
+   cd Raman_Reader
    ```
 
 2. **Set Up a Virtual Environment** (recommended):
